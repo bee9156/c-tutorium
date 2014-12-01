@@ -87,13 +87,13 @@ void init_me();
 void init_two();
 void free_me();
 void free_two();
-
+*/
 // ausführende Funktionen
 void do_something();
 void do_something_else();
 
 // andere Funktionen
-.
+/*.
 .
 .
  
