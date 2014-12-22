@@ -26,6 +26,7 @@ aktueller Inhalt:
  * structs - struct.c: Beispiele für Structzugriffe (Pointer und direkt - wichtig!)
 
 ##Klausuren - Lsg
+ * SS2013 - komplett (alles durchkommentiert)
  * SS2014 - Aufgabe 3
 
 ##Klausuren - Lsg (unbesprochen):
