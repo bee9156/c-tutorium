@@ -25,9 +25,11 @@ aktueller Inhalt:
  * functions - sum.c: Übung zum rekursiven Berechnen von Summen (wichtig!) - inkl. Lsg
  * structs - struct.c: Beispiele für Structzugriffe (Pointer und direkt - wichtig!)
 
-##Klausuren - Lsg
- * SS2013 - komplett (alles durchkommentiert)
- * SS2014 - Aufgabe 3
+##Klausuren
+ * WS2011/12 - Aufgabe 4 (vorbereitet)
+ * WS2011/12 - Aufgabe 5 (vorbereitet)
+ * SS2013 - komplett fertig (alles durchkommentiert)
+ * SS2014 - Aufgabe 3 (fertig)
 
 ##Klausuren - Lsg (unbesprochen):
 https://github.com/excelite/GdP1-P
