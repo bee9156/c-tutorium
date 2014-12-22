@@ -27,4 +27,6 @@ aktueller Inhalt:
 
 ##Klausuren - Lsg
  * SS2014 - Aufgabe 3
- 
+
+##Klausuren - Lsg (unbesprochen):
+https://github.com/excelite/GdP1-P
