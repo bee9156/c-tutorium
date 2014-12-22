@@ -1,0 +1,80 @@
+Teil 1 a):
+
+Aufgabenthemen:
+* rekursive Funktionen
+* Codeverständnis
+* Modulo
+
+Nebenrechnungen:
+342:162 = 2 Rest 18
+162:18 = 9 Rest 0
+
+Erklärung:
+Die Funktion f erhält die Parameter a und b (beides Integer).
+
+Als erstes erfolgt die Textausgabe der Parameter, danach wird geprüft ob Parameter gleich 0 ist (sonst bei modulo: Division durch 0).
+
+Falls b == 0: rückgabe des Parameters a, sonst neuer Aufruf von Funktion f mit neuen Parametern.
+
+Die letzte Zeile der Ausgabe entseht durch den ersten Aufruf in der Funktion main und dem Rückgabewert falls b == 0 (return a).
+
+Teil 1 b):
+Aufgabenthemen:
+* Codeverständnis
+* Funktionsprototypen
+* call by reference
+* call by value
+
+Erklärung:
+typdef struct wort {...} wort;
+Hier wird ein "struct wort" deklariert und via typedef als "wort" definiert.
+Es enthält ein char-Array text (char *text - alternativ: char text[SIZE], allerdings scheint die Arraygröße dynamisch zu sein) und einen Pointer zum nächsten struct wort (struct wort *next).
+
+Definitionen:
+text:       Typ:    char*                   Inhalt: Adresse des char-Arrays
+next:       Typ:    wort*                   Inhalt: Adresse des nächsten Wortes
+w:          Typ:    struct wort             Inhalt: {...}
+woerter:    Typ:    pointer to struct wort  Inhalt: Adresse von w
+
+Funktion f1:
+Rückgabe:
+char    (erkennbar an: "...[Position im char-Array]")
+Parameter 1:
+wort*   (es wird woerter übergeben => parametertyp: wort*)
+Parameter 2:
+char*   (erkennbar an: Parameter = "@" - "" ist eine konstante Zeichenkette)
+
+Funktion f2:
+Rückgabe:
+char*   (es wird text gesetzt => Parametertyp: char*)
+Parameter 1:
+wort**  (& gibt die Adresse einer variablen => es muss ein Pointer zur variablen geliefert werden)
+Parameter 2:
+wort*   (es wird next übergeben => Parametertyp: wort*)
+
+Funktion f3:
+Rückgabe:
+wort*   (es wird next gesetzt => Typ wort*)
+Parameter 1:
+char*   (es wird text übergeben => Typ char*)
+Parameter 2:
+wort**  (& gibt die Adresse einer variablen => es muss ein Pointer zur variablen geliefert werden)
+
+Funktion f4:
+Rückgabe:
+wort*   (woerter wird gesetzt => Typ wort*)
+Parameter 1:
+wort    (w wird übergeben => Typ wort)
+Parameter 2:
+char*   (text wird übergeben => Typ char* (+ 1 für Parametertyp egal))
+
+Funktion f5:
+Hinweis: zur Typenbestimmung kann hier eine Pointerebene entfernt werden
+=> woerter = f5((*woerter).next, *(w.text));
+Rückgabe:
+wort*   (woerter wird gesetzt => Typ: wort)
+Parameter 1:
+wort*   (next wird übergeben => Typ: wort*)
+
+Parameter 2:
+char    (variable wird durch * dereferenziert => Typ: char)

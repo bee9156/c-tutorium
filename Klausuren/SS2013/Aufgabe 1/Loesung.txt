@@ -1,0 +1,21 @@
+Aufgabe 1 a)
+Die Ausgabe lautet:
+
+a: 342, b: 162
+a: 162, b: 18
+a: 18, b:0
+18
+
+Aufgabe 1 b)
+
+Fuktionsprototypen:
+
+char f1 (wort* woerter, char* string);
+char* f2 (wort** ptowort, wort* awort);
+wort* f3 (char* atext, wort** ptowort);
+wort* f4 (wort w, char* ptotext);
+wort* f5 (wort* nextwort, char atext);
+
+Aufgabe 1 c)
+
+Die Funktion gibt das char-Array t zurück, dieses ist allerdings nur innerhalb von kopiere (temporär) existent.
