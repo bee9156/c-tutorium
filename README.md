@@ -28,7 +28,8 @@ aktueller Inhalt:
 ##Klausuren
  * WS2011/12 - Aufgabe 4 (vorbereitet)
  * WS2011/12 - Aufgabe 5 (vorbereitet)
- * SS2013 - komplett fertig (alles durchkommentiert)
+ * WS2012/13 - komplett (kommentiert)
+ * SS2013 - komplett
  * SS2014 - Aufgabe 3 (fertig)
 
 ##Klausuren - Lsg (unbesprochen):
