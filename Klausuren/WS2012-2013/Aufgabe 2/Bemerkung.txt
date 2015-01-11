@@ -1,0 +1,122 @@
+Dieser Lösungsansatz verwendet eine dynamische Speicherreservierung für ein
+2-dimensionales Array und eine Augsabe via eines Strings, bzw. einer Zeichenkette.
+
+Die dynamische Seicherallokation mittels malloc wird empfohlen, da dadurch ein
+skalierbares Array und damit eine Codereduzierung beim Zeichnen der Figur ermöglicht
+wird. Die Ausgabe als String dient rein der Einsparung von ein paar Codezeilen und
+damit Zeit.
+Des weiteren wird hierdurch eine Lösung nach "Schema F" vereinfacht.
+
+
+
+Codeerklärungen:
+
+** Variablendeklarationen
+Hier werden die verwendeten Variablen deklariert.
+
+
+
+** Berechnung des Arrays
+Die Anzahl der Zeilen und Spalten wird anhand einer Betrachtung der vorgegebenen
+Figuren errechnet.
+
+#rows:
+Skalierungsfaktor 1:    4 Zeilen
+Skalierungsfaktor 2:    5 Zeilen
+=> Zeilenberechnung:    Skalierungsfaktor + 3
+
+#cols:
+Skalierungsfaktor 1:        9 Spalten
+Skalierungsfaktor 2:        11 Spalten
+Skalierungsfaktor 3:        13 Spalten
+delta Skalierungsfaktor:    2 => Berechnung: x + (2 * Skalierungsfaktor)
+Basis:                      9 - 2*1 = 7 => Basis 7
+=> Spaltenberechnung:       7 + (2 * Skalierungsfaktor)
+
+Durch die Berechnung der Mitte (Spiegelachse) wird das Zeichnen der Beine und der
+Fuesse vereinfacht, wodurch Codezeilen gespart werden können.
+
+#col_center:
+Da hier mit einem Array gearbeitet wird, muss beachtet werden das der Index der
+Mitte benötigt wird.
+
+
+
+** Initialisieren des Arrays
+Zuerst wird der Speicherplatz für die benötigten Pointer der Zeilen reserviert:
+malloc(rows * sizeof(char*))
+
+Danach werden die einzelnen Speicherplätze mit Hilfe einer for-Schleife durchlaufen
+und mit den Pointern der Spaltenarrays initialisiert.
+cells[irow] = malloc(...)
+
+Der benötigte Speicherplatz der Spaltenarrays wird mit Hilfe der vorher berechneten
+Spaltenbreite reserviert. Die Erweiterung "+1" wird durch die Verwendung von Strings
+benötigt.
+malloc((cols+1) * sizeof(char))
+
+Weitergehend wird die Schleife genutzt um die Zeochenketten direkt zu initialisieren.
+Die Grundinitialisierung der Zeichenketten mit einem Leerzeichen vereinfacht das
+Zeichnen der Figur, da nun lediglich die Positionierung der "*" notwendig ist.
+for (icol=0; icol < cols; icol++){
+    cells[irow][icol] = ' ';
+}
+
+Da hier Zeichenketten verwendet werden ist eine Terminierung zwingend notwendig.
+cells[irow][cols] = '\0'
+
+
+
+** Zeichnen der Figur
+#Vorbetrachtung:
+Die zu zeichnende Figur ist spiegelsymetrisch, daher ist eine sehr kompakte Lösung
+möglich, desweiteren können bei genauer Betrachtung 3 Bereiche definiert werden.
+
+Bereich 1:
+1. Zeile
+Das dar zu stellende Symbol ist immer mittig.
+
+Bereich 2:
+2. - vorletzte Zeile
+Die Beine erhalten jeweils ein Symbol, welches in jeder Zeile eine Position weiter
+von der Mitte entfernt gesetzt wird.
+
+Bereich 3:
+letzte Zeile
+Die Fuesse der Figur enthalten immmer jeweils 3 Symbole, welche immer am aeusseren
+Rand platziert werden.
+
+#Bereich 1 (1. Zeile):
+Das Symbol wird in die Mitte gesetzt.
+cells[0][col_center] = '*'
+
+#Bereich 2 (Beine):
+Die Beine werden mit Hilfe einer for-Schleife gezeichnet. Durch die Initialisierung
+"irow=1" wird die erste und durch die Endbedingung "irow < rows-1" die letzte Zeile
+ignoriert.
+for(irow=1, icol=1; irow < rows -1;...){...}
+
+Da die zu setzenden Symbole mit jeder Zeile eine Position weiter von der Mitte
+entfernt gezeichnet werden, wird bei jedem Schleifendurchlauf irows, wie auch icols
+inkrementiert.
+for(...;...;irow++, icol++){...}
+
+Die Symbole selbst werden abh. vom aktuellen Schleifendurchlauf beidseitig gesetzt.
+cells[irow][col_center + icol] = '*'
+cells[irow][col_center - icol] = '*'
+
+#Bereich 3 (Fuesse):
+Da die Fuesse aus jeweils 3 Symbolen bestehen bietet sich die Nutzung einer weiteren
+for-Schleife an.
+for (icol = 0; icol < 3; icol++){...}
+
+Die einzelnen Symbole der Fuesse werden in Abhaengigkeit des Randes gesetzt.
+cells[irow][0+icol] = '*'
+cells[irow][cols-1-icol] = '*'
+
+Da Strings verwendet werden, muss die Terminierung beachtet werden.
+[cols-1-...]
+
+
+** Ausgabe der Strings
+Zu letzt werden die generierten Strings ausgegeben.

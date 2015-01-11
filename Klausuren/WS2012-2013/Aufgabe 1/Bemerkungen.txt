@@ -1,0 +1,47 @@
+Aufgabe 1 a)
+
+Funktion f1:
+Rückgabewert:
+int*            (s ist vom Typ int* => int*)
+Parameter 1:
+char*           (& übergibt Adresse von var, var = Typ char => Typ char*)
+
+Funktion f2:
+Rückgabewert:
+struct elem     (n ist ein Array von structs => Typ struct elem)
+Parameter 1:
+char*           ("def" ist eine konstante Zeichenkete => Typ char*)
+
+Funktion f3:
+Rückgabewert:
+struct elem*    (um via -> auf s zugreifen zu können benötigt man einen pointer zum struct)
+Parameter 1:
+struct elem*    (.next ist ein Pointer auf ein struct, des weiteren lässt "->" auf einen pointer schließen => Typ: struct elem*)
+
+Funktion 4:
+Rückgabewert:
+void            (es wird kein Rückgabewert benötigt => void)
+Parameter 1:
+char            (aus f3 ableitbar, da dort p als char* definiert wurde und nun dereferenziert wird => Typ char)
+Parameter 2:
+struct elem**   (& übergibt adresse von .next => Pointer auf pointer => Typ: struct elem**)
+
+Funktion 5:
+Rückgabewert:
+char*           ( da .s gesetzt wird)
+Parameter 1:
+char**          (& übergibt Adresse von .s = char* => char**)
+Parameter 2:
+char*           (s ist vom Typ char* => char*)
+
+
+
+
+Aufgabe 1 b)
+WICHTIG:
+Im Gegensatz zu malloc() werden bei calloc() alle Werte des allozierten (reservierten) Speicherbereichs automatisch mit 0 initialisiert.
+
+Durch if Bedingung (j == 0 || j == i) werden die Randpositionen des Dreiecks auf den Wert 1 geändert.
+
+
+

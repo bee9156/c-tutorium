@@ -1,0 +1,15 @@
+1 a)
+
+int* f1(char* c);
+struct elem f2(char* c);
+struct elem* f3(struct elem* nextelem);
+void f4(char c, struct elem** nextelem);
+char* f5(char** c, int* c2);
+
+1 b)
+  1  0  0  0  0
+  1  1  0  0  0
+  1  2  1  0  0
+  1  3  3  1  0
+  1  4  6  4  1
+

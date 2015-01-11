@@ -1,0 +1,120 @@
+** Allgemein:
+
+
+
+** Funktion "bool istVokal(char c)":
+
+Die Funktion istVokal erhaelt einen Parameter c des Typs char und soll eine bool-Wert(true/false)
+zurueckgeben, falls c ein Vokal ("aeiou") ist.
+Da lediglich ein Vergleich eines einzelnen characters durchgefuehrt werden soll kann hier ein
+minimalistischer Ansatz umgesetzt werden.
+
+Ansatz:
+(Bedingung a || Bedingung b) gibt 1 (= true, bei bool) zurueck sobald Bedingung a oder Bedingung b
+zutreffen. Es ist eine quasi unbegrenzte Verkettung moeglich (Bedingung a || Bedingung b || 
+Bedingung c ||.....).
+
+Im vorhandenen Fall dient eine Vergleich des uebergebenen characters mit einem Vokal als Bedingung:
+c == 'a'
+
+Daraus ergibt sich die Loesung:
+c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
+
+Als letztes muss der Wert des Vergleiches zurueckgegeben werden:
+return c == .....
+
+
+
+** Funktion "int zaehleVokale(char* s)":
+
+Die Funktion zaehleVokale erhaelt einen Parameter des Typs char* (character pointer / character-Array),
+als Rueckgabewert wird ein Integer (Ganzzahl) erwartet.
+
+Ansatz:
+Jeder character im character-Array soll geprueft werden ob er ein Vokal ist. Dazu bietet sich eine
+Schleife an, welche jeden character einzeln mit der aus Teilaufgabe a bekannten Funktion istVokal
+ueberprueft (eine Loesung von Teilaufgabe a ist nicht zwingend notwendig!).
+
+Anfangs werden die Variablen i (Schleifenzaehler) und matches (Trefferzaehler) deklariert und matches
+direkt mit dem Wert 0 initialisiert.
+
+Die Gesamtlaenge der zu ueberpruefenden Zeichenkette (character-Array) kann ueber die in der Angabe
+zur Verfuegung gestellte Funktion "int strlen(char* string)" (aus string.h) ermittelt werden.
+strlen(s)
+
+Als Terminierungsbedingung der Schleife dient die ermittelte Gesamtlaenge der Zeichenkette.
+for (...; i < strelen(s); ...) {...}
+
+Waehrend des Schleifendurchlaufes wird das character-Array an Position i mit der Funktion "istVokal"
+ueberpruft.
+if (istVokal(s[i])) {...}
+
+Falls der gepruefte character ein Vokal ist wird der Trefferzaehler inkrementiert.
+matches++
+
+Zu letzt wird die Anzahl der Treffer zurueckgegeben:
+return matches
+
+
+
+** Funktion "char* nachB(char* orig)"
+
+Die Funktion nachB erhaelt eine Zeichenkette (character-Array) als Parameter, welche in die "b-sprache"
+ubersetzt, kopiert und zurueckgegeben werden soll.
+
+Ansatz:
+Die zurueckzugebende Zeichenkette muss kopiert werden, daher ist es erforderlich die neue Laenge im
+Vorraus zu berechnen. Nach der Berechnung werden die Elemente der Ursprungszeichenkette in die Ziel-
+zeichenkette kopiert. Wurde ein Vokal kopiert, wird die konvertierung in die "b-Sprache" durchgefuehrt.
+Anschliessend wird die neue Zeichenkette terminiert und zurueckgegeben (bzw. deren Pointer).
+
+Laengenberechnung Zielzeichenkette:
+Bei der b-Sprache wird jeder Vokal um die Zeichen "b<Vokal>" erweitert (je Vokal: Laenge+2). Dadurch
+ergibt sich die Lengenberechnung Gesamtlaenge = Ursprungslaenge + 2* Anzahl vorhandene Vokale. Die
+Ursprungslaenge wird wieder ueber die Funktion strlen(char* s) und die Anzahl der Vokale ueber
+zaehleVokale(char* s). Desweiteren muss eine Zeichenkette terminiert werden (+ 1, fuer Terminierung).
+newLen = strlen(orig) + 2 * zaehleVokale(orig) + 1
+
+Speicherplatz reservieren:
+Der benoetigte Speicherplatz wird in Abhaengigkeit der neuen Laenge und der Speicherbreite eines character-Elementes (sizeof(char)) errechnet und reserviert. Durch "malloc(...)" erhaelt man einen
+Pointer auf den reservierten Speicherplatz:
+char* newString = malloc(newLen * sizeof(char))
+
+Elemente der Zeichenketten kopieren:
+Da zwei Zeichenketten unabhaengig von einander durchlaufen werden muessen, werden zwei Indexvariablen
+deklariert und mit dem Wert 0 initialisiert.
+int isource = 0 (Ursprungszeichenkette), itarget = 0 (Zielzeichenkette)
+
+Auf Grund der Initialisierung ist in der for-Schleife keine Initialisierung mehr notwendig)
+for(;.....){...}
+
+Da keine Elemente der Ursprungszeichenkette uebersprungen werden duerfen, ist diese die fuer die
+Schleife signifikante Zeichekette. Daher wird die Schleifenendbedingung anhand der Laenge der
+Ursprungszeichenkette ermittelt. Nach dem Schleifendurchlauf wird der Schleifenzaehler inkrementiert:
+for (; isource < strlen(orig); isource++) {...} 
+
+Kopieren der Elemente:
+Das aktuelle Element der Ursprungszeichenkette wird an die aktuelle Position der Zielzeichenkette
+kopiert:
+newString[...] = orig [isource]
+
+Nach erfolgter Operation wird die Zaehlervariable der Zielzeichenkette inkrementiert:
+newString[itarget++] = ...
+
+Nun wird ueberprueft oder der kopierte character ein Vokal war.
+if (isVokal(orig[isource]) {...}
+
+Falls es ein Vokal war wird die konvertierung in die b-Sprache durchgefuehrt (anhaengen von "b<Vokal>"):
+newString[...] = 'b'
+newString[...] = orig[isource]
+
+Um einen Konflikt mit den Speicherplaetzen in der Zielzeichenkette zu vermeiden wird, wieder nach
+jeder Operation die Zaehlervariable der Zielzeichenkette inkrementiert:
+newString[itarget++] = ...
+
+Nachdem die Ursprungszeichenkette komplett verarbeitet wurde, muss diese noch terminiert und zurueck-
+gegeben werden. Da nach jeder erfolgten Operation itarget inkrementiert wurde zeigt itarget immer auf
+den naechsten zu bearbeitenden Platz in der Zielzeichenkette, daher kann itarget direkt verwendet werden:
+newString[itarget] = '\0'
+
+return newString

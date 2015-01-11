@@ -1,0 +1,6 @@
+Aufgabe 4 d)
+
+Annahme:
+free_list() gibt die komplette Liste und nicht nur ein Listenelement frei.
+
+Nein, da Liste B (von anchor_b) Bestandteil von Liste A (anchor_a) ist und somit bereits freigegen wurde.
