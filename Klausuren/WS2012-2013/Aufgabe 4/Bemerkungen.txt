@@ -1,0 +1,100 @@
+** allgemein **
+
+** Funktion node_t* list_create_node(int data) **
+Die Funktion list_create_node is quasi die standard Funktion bei verketteten Listen.
+
+Sie erhält einen Integer als Parameter, welcher hinterlegt werden soll.
+
+Hinweis: In der Regel muss nicht auf Erfolg des Befehls malloc geprüft werden, es ist aber die genaue Aufgabenstellung zu beachten!
+
+Vorgehensweise:
+1. Anlegen der lokalen Variablen, in welcher die Referenz (Pointer) auf das neu erzeugte Element hinterlegt wird.
+2. Erstellen des neuen Elements (meist in Kombination mit Schritt 1).
+3. Zuweisen der übergebenen Daten (hier: nur ein Integer, generell sind aber meist alle Parameter zu verwenden)
+4. Hinterlegen des NULL-Pointers als nächstes Listenelement
+5. zurückgeben der gespeicherten Referenz
+
+
+
+** Funktion void list_insert_end_proc(node_t** panchor, int data) **
+Die Funktion list_insert_end_proc soll hier als iterativ, prozeduale Variante geschrieben werden.
+iterativ:   alles soll in einer lokalen Schleife ablaufen, unbedingt ohne Selbstaufrufe arbeiten!!
+prozedual:  es gibt keinen Rückgabewert, daher wird hier auch ein "pointer-pointer" übergeben.
+
+Hinweis: Da wir einen Integer "data" als Parameter übergeben bekommen lässt sich hieraus bereits ableiten
+das wir die Funktion list_create_node (Teilaufgabe a) verwenden sollen.
+
+Vorgensweise:
+1. Überprüfung: welche Parameter sind möglich und welche verlangen andere Vorgehensweisen?
+2. Implementierung aller Spezialfälle (hier: panchor == NULL)
+3. Implementierung des Rests
+Lösungsvorschlag:
+Falls panchor == NULL: direktes Erstellen des Elements und beenden; sonst: bis listenende Iterieren, Element erstellen
+und anhängen
+3.1 Fall panchor == NULL:
+    über if-Bedingung: direktes Erstellen und einhängen des neuen Elements
+3.2 Fall Liste enthält Elemente
+    Um das Listenende zu finden bietet sich eine while Schleife mit Durchlaufbedingung anchor->next != NULL an
+    Dadurch laufen wir durch unsere Liste bis wir als nächstes Element den NULL-Pointer vorliegen haben.
+    (Hinweis: wir überprüfen hier immer das folgende Element, da wir dadurch unser neues Element direkt einhängen
+    können, ohne das wir uns das vorherige Element merken müssen - für diese Aufgabe vollkommen ausreichend).
+    Anschließend Element erstellen und einhängen
+    
+** Funktion node_t* list_append(node_t* anchor_a, node_t* anchor_b) **
+
+Ansatz:
+Wir erhalten 2 Listenanfänge als Parameter übergeben, wobei Liste b an Liste a angehängt werden soll.
+
+Daraus ergeben sich 4 mögliche Fälle:
+1. Liste a: leer (NULL) und Liste b: leer (NULL)    => wir müssen nichts machen
+2. Liste a: hat Elemente und Liste b: leer (NULL)   => wir müssen nicht machen
+3. Liste a: leer (NULL) und Liste b: hat Elemente   => Listenanfang b wird erstes Element von a
+4. beide Listen enthalten Elemente                  => Ende der Liste a suchen und unsere Liste b einhängen
+
+Da wir eine Rekursive Funktion schreiben und beim ersten Aufruf der Funktion den neuen Listenanfang zurückgeben
+sollen ergibt sich daraus folgender Pseudocode:
+
+1. Hinterlegen des aktuellen elements (parameter anchor_a)
+2. Falls anchor_a == NULL => anchor_a = anchor_b
+3. Falls nicht: Selbstaufruf mit nächtem element in a und anchor_b als parameter und Rückgabewert in anchor_a->next speichern
+4. zurückgeben des aktuell gemerkten Elements
+
+Daraus folgt das die bestehende Liste a durch Selbstaufrufe so lange durchlaufen wird bis der NULL-Pointer des
+letzten Elements der Liste a als Parameter übergeben wird.
+
+Die Rückgabewerte werden hier bei jedem Zugriff als nächstes Element neu geschrieben.
+
+Bsp (Schematisch):
+Liste a:
+
+anchor_a = &el_a;
+
+Elementname (nur für uns)   el_a        el_b        el_c
+data                        10          20          30
+next                        &el_b       &el_c       NULL
+
+
+Liste b:
+
+anchor_b = &el_d;
+
+Elementname (nur für uns)   el_e        el_f        el_g
+data                        10          20          30
+next                        &el_f       &el_g       NULL
+
+1. Aufruf (aus main):
+    gemerkt = el_a
+    => 2. Aufruf nötig
+        gemerkt = el_b
+        => 3. Aufruf nötig
+            gemerkt = el_c
+            => 4. Aufruf nötig
+                gemerkt = NULL
+                => Ende gefunden
+                => Rückgabe el_e
+            speichern:  el_c -> next = el_e
+            Rückgabe el_c
+        speichern: el_b -> next = el_c
+        Rückgabe: el_b
+    speichern: el_a ->next = el_b
+    Rückgabe: el_a
